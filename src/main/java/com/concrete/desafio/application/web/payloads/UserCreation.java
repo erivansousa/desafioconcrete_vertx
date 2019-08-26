@@ -2,7 +2,7 @@ package com.concrete.desafio.application.web.payloads;
 
 import java.util.List;
 
-public class User {
+public class UserCreation {
 
     private String name;
     private String email;

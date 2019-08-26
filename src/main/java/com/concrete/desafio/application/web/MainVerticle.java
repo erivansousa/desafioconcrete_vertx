@@ -1,7 +1,7 @@
 package com.concrete.desafio.application.web;
 
 import com.concrete.desafio.application.controller.UserController;
-import com.concrete.desafio.domain.service.UserService;
+import com.concrete.desafio.domain.access_register.service.UserService;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;

@@ -1,8 +1,10 @@
-package com.concrete.desafio.domain.service;
+package com.concrete.desafio.domain.access_register.service;
 
+import com.concrete.desafio.infrastructure.error.ErrorMessage;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.Message;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 
 public class UserService extends AbstractVerticle {
@@ -17,15 +19,21 @@ public class UserService extends AbstractVerticle {
     }
 
     private void onMessage(Message<JsonObject> message){
-        if (message.headers().contains("action"))
+        if (message.headers().contains("action")) {
             switch (message.headers().get("action")){
                 case ACTION_CREATE_USER:
                     System.out.printf("Message received: \n%s\n", message.body());
                     message.reply(String.format("Message received: \n%s\n", message.body()));
+                    //TODO salvar usuario no banco
+                    break;
+                default :
+                    message.fail(1, Json.encode(new ErrorMessage("Any valid action header value specified")));
                     break;
             }
-        else
-            message.fail(1, "Any action header specified");
+        }
+        else {
+            message.fail(1, Json.encode(new ErrorMessage("Any action header specified")));
+        }
 
     }
 }

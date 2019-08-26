@@ -1,24 +1,23 @@
 package com.concrete.desafio.application.controller;
 
-import com.concrete.desafio.application.web.payloads.User;
+import com.concrete.desafio.application.web.payloads.UserCreation;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpStatusClass;
 import io.vertx.core.eventbus.DeliveryOptions;
-import io.vertx.core.eventbus.MessageProducer;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 
-import static com.concrete.desafio.domain.service.UserService.USER_SERVICE_MESSAGE;
+import static com.concrete.desafio.domain.access_register.service.UserService.ACTION_CREATE_USER;
+import static com.concrete.desafio.domain.access_register.service.UserService.USER_SERVICE_MESSAGE;
 
 public class UserController implements RestController {
 
     public void createUser(RoutingContext rc){
-        User newUser = Json.decodeValue(rc.getBodyAsString(), User.class);
+        UserCreation newUser = Json.decodeValue(rc.getBodyAsString(), UserCreation.class);
 
-        //TODO send a message on the stream to the service
+        //TODO send a message on the event bus to the service
         DeliveryOptions options = new DeliveryOptions();
-        options.addHeader("action", "create_user");
+        options.addHeader("action", ACTION_CREATE_USER);
 
         rc.vertx()
                 .eventBus()
